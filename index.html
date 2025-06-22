@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#121212" />
+  <title>Jaysky Logbook</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --box-color: #1e1e1e;
+      --accent: #00b4ff;
+    }
+    body.light {
+      --bg-color: #f9f9f9;
+      --text-color: #000000;
+      --box-color: #ffffff;
+      --accent: #0077cc;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: var(--accent);
+    }
+    .section {
+      background: var(--box-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    label, input, button, select, textarea {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+    input, select, textarea {
+      padding: 8px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      color: #ffffff;
+      border-radius: 6px;
+    }
+    body.light input, body.light select, body.light textarea {
+      background: #f0f0f0;
+      color: #000;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .toggle-mode {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .entry-list {
+      margin-top: 10px;
+    }
+    canvas {
+      background: var(--box-color);
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-mode" onclick="toggleTheme()">Toggle Dark/Light</button>
+  <h1>Jaysky Logbook</h1>
+
+  <div class="section">
+    <h2>Sales Entry</h2>
+    <label>Date</label>
+    <input type="date" id="saleDate">
+    <label>Product</label>
+    <input type="text" id="product">
+    <label>Quantity</label>
+    <input type="number" id="quantity">
+    <label>Price</label>
+    <input type="number" id="price">
+    <button onclick="saveSale()">Save Sale</button>
+    <input type="text" id="searchProduct" placeholder="Search by product name..." oninput="renderSales()">
+    <div class="entry-list" id="salesList"></div>
+  </div>
+
+  <div class="section">
+    <h2>Expenses Entry</h2>
+    <label>Date</label>
+    <input type="date" id="expenseDate">
+    <label>Type</label>
+    <input type="text" id="expenseType">
+    <label>Amount</label>
+    <input type="number" id="expenseAmount">
+    <button onclick="saveExpense()">Save Expense</button>
+    <div class="entry-list" id="expensesList"></div>
+  </div>
+
+  <div class="section">
+    <h2>Shopee Tracker</h2>
+    <label>Tracking Number</label>
+    <input type="text" id="trackingNumber">
+    <label><input type="checkbox" id="paymentReleased"> Payment Released</label>
+    <button onclick="saveShopee()">Save Entry</button>
+    <div class="entry-list" id="shopeeList"></div>
+  </div>
+
+  <div class="section">
+    <h2>Sales vs Expenses</h2>
+    <canvas id="logbookChart"></canvas>
+    <button onclick="drawChart()">Refresh Graph</button>
+    <div id="totals"></div>
+  </div>
+
+  <div class="section">
+    <h2>Export Backup</h2>
+    <button onclick="exportData()">Download JSON</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
